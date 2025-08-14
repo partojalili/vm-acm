@@ -2,27 +2,28 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  annotations:
+   annotations:
     kubevirt.io/latest-observed-api-version: v1
     kubevirt.io/storage-observed-api-version: v1
-  name: my-vm
-  namespace: vmexamples
-  finalizers:
-    - kubevirt.io/virtualMachineControllerFinalize
-  labels:
-    app: my-vm
+    name.os.template.kubevirt.io/fedora42: Fedora 31 or higher
+   name: fedora-2
+   namespace: vmexamples
+   labels:
+    app: fedora-2
 spec:
   dataVolumeTemplates:
     - apiVersion: cdi.kubevirt.io/v1beta1
       kind: DataVolume
       metadata:
         creationTimestamp: null
-        name: my-vm
+        name: fedora-2
       spec:
         source:
           http:
             url: 'https://download.fedoraproject.org/pub/fedora/linux/releases/42/Cloud/x86_64/images/Fedora-Cloud-Base-Generic-42-1.1.x86_64.qcow2'
-        storage:
+        pvc:
+          accessModes:
+            - ReadWriteMany
           resources:
             requests:
               storage: 10Gi
@@ -36,8 +37,9 @@ spec:
         vm.kubevirt.io/workload: server
       creationTimestamp: null
       labels:
-        kubevirt.io/domain: my-vm
+        kubevirt.io/domain: fedora-2
         kubevirt.io/size: small
+        network.kubevirt.io/headlessService: headless
     spec:
       architecture: amd64
       domain:
@@ -59,7 +61,7 @@ spec:
       terminationGracePeriodSeconds: 180
       volumes:
         - dataVolume:
-            name: my-vm
+            name: fedora-2
           name: rootdisk
         - cloudInitNoCloud:
             userData: |-
@@ -68,6 +70,3 @@ spec:
               password: xwip-ehkp-87vi
               chpasswd: { expire: False }
           name: cloudinitdisk
-
-   
-
