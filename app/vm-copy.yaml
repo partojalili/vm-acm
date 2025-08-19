@@ -53,6 +53,9 @@ spec:
             - disk:
                 bus: virtio
               name: cloudinitdisk
+            - disk:
+                bus: scsi
+              name: disk-vm
         memory:
           guest: 3Gi
         resources: {}
@@ -68,6 +71,25 @@ spec:
               password: xwip-ehkp-87vi
               chpasswd: { expire: False }
           name: cloudinitdisk
+        - dataVolume:
+            hotpluggable: true
+            name: disk-vm
+          name: disk-vm
+
 
    
+---
 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: disk-vm
+  namespace: vmexamples5
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  storageClassName: ocs-storagecluster-ceph-rbd-virtualization
+  volumeMode: Block
