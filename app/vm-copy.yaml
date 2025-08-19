@@ -84,7 +84,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: disk-vm
-  namespace: vmexamples5
+  namespace: vmexamples
 spec:
   accessModes:
     - ReadWriteMany
