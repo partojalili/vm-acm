@@ -11,6 +11,7 @@ metadata:
     - kubevirt.io/virtualMachineControllerFinalize
   labels:
     app: my-vm
+    app2: my-vm2
 spec:
   dataVolumeTemplates:
     - apiVersion: cdi.kubevirt.io/v1beta1
