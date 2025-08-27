@@ -55,7 +55,7 @@ spec:
                 bus: virtio
               name: cloudinitdisk
         memory:
-          guest: 3Gi
+          guest: 2Gi
         resources: {}
       terminationGracePeriodSeconds: 180
       volumes:
