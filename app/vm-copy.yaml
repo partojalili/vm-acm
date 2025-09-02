@@ -12,6 +12,7 @@ metadata:
   labels:
     app: my-vm
     app2: my-vm3
+    app3: my-vm4
 spec:
   dataVolumeTemplates:
     - apiVersion: cdi.kubevirt.io/v1beta1
